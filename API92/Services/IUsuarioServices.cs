@@ -9,5 +9,9 @@ namespace API92.Services
 
         public Task<Response<UsuariosResponse>> CrearUsuario(UsuariosResponse request);
 
+        public Task<Response<UsuariosResponse>> ActualizarUsuario(UsuariosResponse request);
+
+        public Task<Response<UsuariosResponse>> EliminarUsuario(UsuariosResponse request);
+
     }
 }

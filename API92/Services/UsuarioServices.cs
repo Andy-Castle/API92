@@ -2,6 +2,8 @@
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
+
+
 namespace API92.Services
 {
     public class UsuarioServices: IUsuarioServices
@@ -55,6 +57,55 @@ namespace API92.Services
 
         }
 
-        
+        public async Task<Response<UsuariosResponse>> ActualizarUsuario(UsuariosResponse request)
+        {
+            try
+            {
+                Usuario? usuario = await _context.Usuarios.FirstOrDefaultAsync(user => user.PkUsuario == request.Id);
+
+                if (usuario == null)
+                {
+                    return new Response<UsuariosResponse>("Usuario no encontrado");
+                }
+
+                usuario.Nombre = request.Nombre;
+                usuario.UserName = request.UserName;
+                usuario.Password = request.Password;
+                usuario.FkRol = request.FkRol;
+
+                _context.Usuarios.Update(usuario);
+                await _context.SaveChangesAsync();
+
+                return new Response<UsuariosResponse>(request, "Usuario actualizado");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Sucedio un error" + ex.Message);
+            }
+        }
+
+        public async Task<Response<UsuariosResponse>> EliminarUsuario(UsuariosResponse request)
+        {
+            try
+            {
+                Usuario? usuario = await _context.Usuarios.FirstOrDefaultAsync(user => user.PkUsuario == request.Id);
+
+                if (usuario == null)
+                {
+                    return new Response<UsuariosResponse>("Usuario no encontrado");
+                }
+
+                _context.Usuarios.Remove(usuario);
+                await _context.SaveChangesAsync();
+
+                return new Response<UsuariosResponse>(request, "Usuario eliminado");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Sucedio un error" + ex.Message);
+            }
+        }
+
+
     }
 }

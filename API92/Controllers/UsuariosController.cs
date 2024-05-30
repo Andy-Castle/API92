@@ -27,5 +27,19 @@ namespace API92.Controllers
             var response = await _usuarioServices.CrearUsuario(request);
             return Ok(response);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Actualizar([FromBody]UsuariosResponse request)
+        {
+            var response = await _usuarioServices.ActualizarUsuario(request);
+            return Ok(response);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Eliminar([FromBody]UsuariosResponse request)
+        {
+            var response = await _usuarioServices.EliminarUsuario(request);
+            return Ok(response);
+        }
     }
 }
