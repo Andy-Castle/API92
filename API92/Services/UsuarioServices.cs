@@ -83,11 +83,11 @@ namespace API92.Services
         }
 
         //Hay que el Actualizar y acepte de esta forma del controller [HttpPut("{id}")]
-        public async Task<Response<UsuariosResponse>> ActualizarUsuario(UsuariosResponse request)
+        public async Task<Response<UsuariosResponse>> ActualizarUsuario(int id, UsuariosResponse request)
         {
             try
             {
-                Usuario? usuario = await _context.Usuarios.FirstOrDefaultAsync(user => user.PkUsuario == request.Id);
+                Usuario? usuario = await _context.Usuarios.FirstOrDefaultAsync(user => user.PkUsuario == id);
 
                 if (usuario == null)
                 {
@@ -106,16 +106,17 @@ namespace API92.Services
             }
             catch (Exception ex)
             {
-                throw new Exception("Sucedio un error" + ex.Message);
+                throw new Exception("Sucedió un error: " + ex.Message);
             }
         }
 
-        //Hay que el Eliminar y acepte de esta forma del controller [HttpPut("{id}")]
-        public async Task<Response<UsuariosResponse>> EliminarUsuario(UsuariosResponse request)
+
+        //Hay que el Eliminar y acepte de esta forma del controller [HttpDelete("{id}")]
+        public async Task<Response<UsuariosResponse>> EliminarUsuario(int id)
         {
             try
             {
-                Usuario? usuario = await _context.Usuarios.FirstOrDefaultAsync(user => user.PkUsuario == request.Id);
+                Usuario? usuario = await _context.Usuarios.FirstOrDefaultAsync(user => user.PkUsuario == id);
 
                 if (usuario == null)
                 {
@@ -125,13 +126,14 @@ namespace API92.Services
                 _context.Usuarios.Remove(usuario);
                 await _context.SaveChangesAsync();
 
-                return new Response<UsuariosResponse>(request, "Usuario eliminado");
+                return new Response<UsuariosResponse>(null, "Usuario eliminado");
             }
             catch (Exception ex)
             {
-                throw new Exception("Sucedio un error" + ex.Message);
+                throw new Exception("Sucedió un error: " + ex.Message);
             }
         }
+
 
 
     }

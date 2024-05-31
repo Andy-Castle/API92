@@ -5,11 +5,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace Domain.Entities
 {
     public class UsuariosResponse
     {
+        [JsonIgnore]
         public int? Id { get; set; }
         public string Nombre { get; set; }
 

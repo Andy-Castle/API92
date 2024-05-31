@@ -36,19 +36,22 @@ namespace API92.Controllers
         }
 
         //Hay que el Actualizar me pida este asi [HttpDelete("{id}")]
-        [HttpPut]
-        public async Task<IActionResult> Actualizar([FromBody]UsuariosResponse request)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Actualizar(int id, [FromBody] UsuariosResponse request)
         {
-            var response = await _usuarioServices.ActualizarUsuario(request);
+            var response = await _usuarioServices.ActualizarUsuario(id, request);
             return Ok(response);
         }
 
+
+
         //Hay que el Eliminar me pida este asi [HttpDelete("{id}")]
-        [HttpDelete]
-        public async Task<IActionResult> Eliminar([FromBody]UsuariosResponse request)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Eliminar(int id)
         {
-            var response = await _usuarioServices.EliminarUsuario(request);
+            var response = await _usuarioServices.EliminarUsuario(id);
             return Ok(response);
         }
+
     }
 }
