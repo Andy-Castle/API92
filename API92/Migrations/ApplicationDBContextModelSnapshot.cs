@@ -22,6 +22,60 @@ namespace API92.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.Entities.Autor", b =>
+                {
+                    b.Property<int>("PkAutor")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PkAutor"));
+
+                    b.Property<string>("Nacionalidad")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PkAutor");
+
+                    b.ToTable("Autores");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Libro", b =>
+                {
+                    b.Property<int>("PkLibro")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PkLibro"));
+
+                    b.Property<int>("AutorPkAutor")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Editorial")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FkAutor")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PkLibro");
+
+                    b.HasIndex("AutorPkAutor");
+
+                    b.ToTable("Libros");
+                });
+
             modelBuilder.Entity("Domain.Entities.Rol", b =>
                 {
                     b.Property<int>("PkRol")
@@ -73,7 +127,7 @@ namespace API92.Migrations
 
                     b.HasIndex("FkRol");
 
-                    b.ToTable("usuarios");
+                    b.ToTable("Usuarios");
 
                     b.HasData(
                         new
@@ -84,6 +138,17 @@ namespace API92.Migrations
                             Password = "12345",
                             UserName = "Masquerade"
                         });
+                });
+
+            modelBuilder.Entity("Domain.Entities.Libro", b =>
+                {
+                    b.HasOne("Domain.Entities.Autor", "Autor")
+                        .WithMany()
+                        .HasForeignKey("AutorPkAutor")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Autor");
                 });
 
             modelBuilder.Entity("Domain.Entities.Usuario", b =>

@@ -22,6 +22,9 @@ namespace API92.Services
             {
                 List<Usuario> response = await _context.Usuarios.ToListAsync();
 
+                //List<Usuario> response = await _context.Usuarios.Include(y=> y.Roles).ToListAsync();
+
+
                 return new Response<List<Usuario>>(response, "Esta es la lista");
 
 
@@ -31,6 +34,28 @@ namespace API92.Services
             }
    
         }
+
+        public async Task<Response<Usuario>> GetById(int id)
+        {
+            try
+            {
+                Usuario? res = await _context.Usuarios.FirstOrDefaultAsync(user => user.PkUsuario == id);
+
+                if (res == null)
+                {
+                    return new Response<Usuario>("Usuario no encontrado");
+                }
+
+                return new Response<Usuario>(res, "Usuario encontrado");
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Sucedio un error" + ex.Message);
+            }
+        }
+
+
 
         public async Task<Response<UsuariosResponse>> CrearUsuario(UsuariosResponse request)
         {
@@ -57,6 +82,7 @@ namespace API92.Services
 
         }
 
+        //Hay que el Actualizar y acepte de esta forma del controller [HttpPut("{id}")]
         public async Task<Response<UsuariosResponse>> ActualizarUsuario(UsuariosResponse request)
         {
             try
@@ -84,6 +110,7 @@ namespace API92.Services
             }
         }
 
+        //Hay que el Eliminar y acepte de esta forma del controller [HttpPut("{id}")]
         public async Task<Response<UsuariosResponse>> EliminarUsuario(UsuariosResponse request)
         {
             try

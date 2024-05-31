@@ -21,6 +21,13 @@ namespace API92.Controllers
             return Ok(response);
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var response = await _usuarioServices.GetById(id);
+            return Ok(response);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Crear([FromBody]UsuariosResponse request)
         {
@@ -28,6 +35,7 @@ namespace API92.Controllers
             return Ok(response);
         }
 
+        //Hay que el Actualizar me pida este asi [HttpDelete("{id}")]
         [HttpPut]
         public async Task<IActionResult> Actualizar([FromBody]UsuariosResponse request)
         {
@@ -35,6 +43,7 @@ namespace API92.Controllers
             return Ok(response);
         }
 
+        //Hay que el Eliminar me pida este asi [HttpDelete("{id}")]
         [HttpDelete]
         public async Task<IActionResult> Eliminar([FromBody]UsuariosResponse request)
         {

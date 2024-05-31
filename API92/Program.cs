@@ -15,6 +15,7 @@ builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlSer
 
 //inyección de dependencias
 builder.Services.AddTransient<IUsuarioServices, UsuarioServices>();
+builder.Services.AddTransient<IAutorServices, AutorServices>();
 
 var app = builder.Build();
 
