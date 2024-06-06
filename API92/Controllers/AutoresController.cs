@@ -1,4 +1,5 @@
 ﻿using API92.Services;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API92.Controllers
@@ -22,6 +23,21 @@ namespace API92.Controllers
                 var result = await _autorServices.GetAutores();
                 return Ok(result);
                 
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> CrearAutor(Autor autor)
+        {
+            try
+            {
+                var result = await _autorServices.Crear(autor);
+                return Ok(result);
             }
             catch (Exception ex)
             {
