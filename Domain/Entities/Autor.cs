@@ -10,7 +10,7 @@ namespace Domain.Entities
 {
     public class Autor
     {
-        [JsonIgnore]
+
 
         [Key]
         public int PkAutor { get; set; }
